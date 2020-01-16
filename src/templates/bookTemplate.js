@@ -6,14 +6,14 @@ import {graphql} from 'gatsby';
 const BookTemplate = ({ data }) => {
   const book = data.book;
   return(
-    <Layout>
+    <section>
       <BookItem
         bookTitle={book.title}
         bookSummary={book.summary}
         bookAuthor={book.author.name}
         bookCover={book.localImage.childImageSharp.fixed }
       />
-    </Layout>
+    </section>
   )
 }
 

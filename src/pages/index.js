@@ -26,7 +26,7 @@ const LinkButton = styled.div`
 const IndexPage = (props) => {
   console.log(props);
   return (
-    <Layout>
+    <section>
       {props.data.allBook.edges.map(edge =>(
       <BookItem
         key={edge.node.id}
@@ -39,7 +39,7 @@ const IndexPage = (props) => {
           < /LinkButton>
       </BookItem>
       ))}
-    </Layout>
+    </section>
   )
   }
 

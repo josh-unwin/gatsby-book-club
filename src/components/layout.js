@@ -11,8 +11,11 @@ import { useStaticQuery, graphql } from "gatsby"
 
 import Header from "./header"
 import "./layout.css"
+import {FirebaseContext, useAuth} from './Firebase';
 
 const Layout = ({ children }) => {
+  // When anything changes within the user, firebase or loading, the Layout will rerender:
+  const { user, firebase, loading } = useAuth();
 
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
@@ -25,7 +28,7 @@ const Layout = ({ children }) => {
   `)
 
   return (
-    <>
+    <FirebaseContext.Provider value={{user, firebase, loading}}>
       <Header siteTitle={data.site.siteMetadata.title} />
       <div
         style={{
@@ -37,7 +40,7 @@ const Layout = ({ children }) => {
       >
         <main>{children}</main>
       </div>
-    </>
+    </FirebaseContext.Provider>
   )
 }
 

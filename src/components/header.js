@@ -39,6 +39,12 @@ const HeaderContent = styled.div`
   }
 `;
 
+const Divider = styled.span`
+  margin: 0 9px;
+  padding-right: 1px;
+  background: #ddd;
+`
+
 const UserInfo = styled.div`
   text-align: right;
   color: white
@@ -71,13 +77,15 @@ const Header = ({ siteTitle }) => {
         <div>
           {user && user.email &&
             <UserInfo>
-              <div>Hello, {user.email}</div>
+              <div>Hello, {user.username || user.email}</div>
               <LogoutLink onClick={handleLogoutClick}>Logout</LogoutLink>
             </UserInfo>
           }
           {(!user || !user.email) &&
             <LoginLink>
               <Link to='/login'>Login</Link>
+              <Divider />
+              <Link to='/register'>Register</Link>
             </LoginLink>
           }
         </div>

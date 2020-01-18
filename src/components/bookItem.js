@@ -8,17 +8,22 @@ const BookItemWrapper = styled.section`
   border: qpx solid #ddd;
   padding: 12px;
   margin-bottom: 20px;
-  box-shadow: 3px 3px 4px 0px rgba(0,0,0,0.19);
+  box-shadow: 4px 4px 8px 0px rgba(0,0,0,0.1);
+  border: 1px solid #ddd;
+
+  > .img-wrapper {
+    margin-right: 10px
+  }
 `;
 
 const BookItem = ({bookTitle, bookAuthor, bookSummary, bookCover, children}) => {
   return (
     <BookItemWrapper>
-      <div>
+      <div className="img-wrapper">
         <Img fixed={bookCover} />
-       </div>
+      </div>
       <div>
-        <h2>{bookTitle} <small>{bookAuthor}</small></h2>
+        <div><h2>{bookTitle}<small> -{bookAuthor}</small></h2></div>
         <p>{bookSummary}</p>
         <div>{children}</div>
       </div>

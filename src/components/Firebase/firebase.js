@@ -13,6 +13,12 @@ class Firebase {
     }
   }
 
+  // I have named the callback 'callbackFromBookComments' for ease of understanding. Teacher called it onSnapshot to use Firebase naming conventions.
+  subscribeToBookComments({ bookId, callbackFromBookComments }) {
+    const bookRef = this.db.collection('books').doc(bookId);
+    return this.db.collection('comments').where('book', '==', bookRef).onSnapshot(callbackFromBookComments);
+  }
+
   async register(email, password, username) {
     const newUser = await this.auth.createUserWithEmailAndPassword(email, password);
     return this.db.collection('user_profiles').doc(username).set({

@@ -16,7 +16,9 @@ class Firebase {
   // I have named the callback 'callbackFromBookComments' for ease of understanding. Teacher called it onSnapshot to use Firebase naming conventions.
   subscribeToBookComments({ bookId, callbackFromBookComments }) {
     const bookRef = this.db.collection('books').doc(bookId);
-    return this.db.collection('comments').where('book', '==', bookRef).onSnapshot(callbackFromBookComments);
+    return this.db.collection('comments').where('book', '==', bookRef)
+    .orderBy('dateCreated', 'desc')
+    .onSnapshot(callbackFromBookComments);
   }
 
   async register(email, password, username) {
@@ -36,6 +38,12 @@ class Firebase {
 
   async logout() {
     await this.auth.signOut();
+  }
+
+  async postComment({text, bookId}){
+    const postCommentCallable = this.functions.httpsCallable('postComment');
+    console.log({text, bookId});
+    return postCommentCallable({text, bookId})
   }
 }
 

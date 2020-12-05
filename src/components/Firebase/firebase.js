@@ -22,14 +22,14 @@ class Firebase {
   }
 
   async register(email, password, username) {
-    const newUser = await this.auth.createUserWithEmailAndPassword(email, password);
-    return this.db.collection('user_profiles').doc(username).set({
-      user_id: newUser.user.uid
-    })
+    await this.auth.createUserWithEmailAndPassword(email, password);
+    const createProfileCallable = this.functions.httpsCallable('createUserProfile');
+    return createProfileCallable({ username: username });
   }
 
-  async getUserProfile({userId}) {
-    return this.db.collection('user_profiles').where('user_id', '==', userId).get();
+  // This time (unlike subscribeToBookComments) I am using the correct naming for onSnapshot callback.
+  getUserProfile({userId, onSnapshot}) {
+    return this.db.collection('user_profiles').where('user_id', '==', userId).limit(1).onSnapshot(onSnapshot)
   }
 
   async login({email, password}) {
